@@ -30,12 +30,11 @@ fi
 if [ -f "yarn.lock" ]; then
 	# npm is an alias
 	echo "---> Building your Node application from source (yarn)"
-	npm install --pure-lockfile --ignore-engines
+	npm install --production=false --pure-lockfile --ignore-engines
 else
 	echo "---> Building your Node application from source (npm)"
-	npm install
+	npm install --production=false
 fi
-npm install -g @angular/cli
 npm run build
 
 # Fix source directory permissions
