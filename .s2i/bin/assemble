@@ -35,7 +35,7 @@ else
 	echo "---> Building your Node application from source (npm)"
 	npm install
 fi
-npm run build:prod
+npm run build
 
 # Fix source directory permissions
 fix-permissions ./
