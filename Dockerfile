@@ -1,10 +1,17 @@
-FROM node:6-alpine
+FROM node:8-alpine
 
-RUN apk update \
-  && apk add --update alpine-sdk \
-  && npm install -g @angular/cli \
-  && ng set --global packageManager=yarn \
-  && apk del alpine-sdk \
-  && rm -rf /tmp/* /var/cache/apk/* *.tar.gz ~/.npm \
-  && npm cache clear \
-  && sed -i -e "s/bin\/ash/bin\/sh/" /etc/passwd
+USER 0
+
+# Create app directory
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
+# Install app dependencies
+COPY package.json /usr/src/app/
+RUN npm install
+
+# Bundle app source
+COPY . /usr/src/app
+
+EXPOSE 8080
+CMD [ "npm", "start" ]
